@@ -1,5 +1,3 @@
-
-
 # cityspire-be
 
 For steps on how to work with this repository [please see here](https://docs.labs.lambdaschool.com/labs-spa-starter/)
@@ -13,14 +11,13 @@ You can find the deployed project at [].
 🚫Add contributor info below, make sure add images and edit the social links for each member. Add to or delete these place-holders as needed
 
 |                                                      [Student 1](https://github.com/codyt11)                                                       |                                                       [Student 2](https://github.com/)                                                        |                                                      [Student 3](https://github.com/)                                                       |                                                       [Student 4](https://github.com/)                                                        |                                                      [Student 5](https://github.com/)                                                       |
-| :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: |
+| :------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: |
 | [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/codyt11) | [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/) | [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/) | [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/) | [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/) |
-|                                [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/)                                |                            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/honda0306)                             |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Mister-Corn)                           |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/NandoTheessen)                           |                           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/wvandolah)                            |
-|                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                |
+|                                   [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/)                                    |                            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/honda0306)                             |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Mister-Corn)                           |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/NandoTheessen)                           |                           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/wvandolah)                            |
+|                   [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                    |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                |
 
 <br>
 <br>
-
 
 ### Key Features
 
@@ -31,6 +28,7 @@ You can find the deployed project at [].
 - feature five
 
 #### Back end deployed to `Heroku`
+
 https://labspt15-cityspire-g.herokuapp.com/
 
 #### [Back end](https://github.com/Lambda-School-Labs/LabsPT15-cityspire-g-be) built using:
@@ -40,7 +38,6 @@ https://labspt15-cityspire-g.herokuapp.com/
 - Knex
 - Docker
 - PostgresSQL
-
 
 # APIs
 
@@ -68,19 +65,19 @@ See `.env` file for example values
 There are 3 options to get postgresql installed locally [Choose one]:
 
 1. Use docker. [Install](https://docs.docker.com/get-docker/) for your platform
-    - run: `docker-compose up -d` to start up the postgresql database and pgadmin.
-    - Open a browser to [pgadmin](http://localhost:5050/) and you should see the Dev server already defined.
-    - If you need to start over you will need to delete the folder `$ rm -rf ./data/pg` as this is where all of the server data is stored.
-      - if the database `api-dev` was not created then start over.
+   - run: `docker-compose up -d` to start up the postgresql database and pgadmin.
+   - Open a browser to [pgadmin](http://localhost:5050/) and you should see the Dev server already defined.
+   - If you need to start over you will need to delete the folder `$ rm -rf ./data/pg` as this is where all of the server data is stored.
+     - if the database `api-dev` was not created then start over.
 2. Download and install postgresql directly from the [main site](https://www.postgresql.org/download/)
-    - make note of the port, username and password you use to setup the database.
-    - Connect your client to the server manually using the values previously mentioned
-    - You will need to create a database manually using a client.
-    - Make sure to update the DATABASE_URL connection string with the values for username/password, databasename and server port (if not 5432).
+   - make note of the port, username and password you use to setup the database.
+   - Connect your client to the server manually using the values previously mentioned
+   - You will need to create a database manually using a client.
+   - Make sure to update the DATABASE_URL connection string with the values for username/password, databasename and server port (if not 5432).
 3. Setup a free account at [ElephantSQL](https://www.elephantsql.com/plans.html)
-    - Sign up for a free `Tiney Turtle` plan
-    - copy the URL to the DATABASE_URL .env variable
-    - make sure to add `?ssl=true` to the end of this url
+   - Sign up for a free `Tiney Turtle` plan
+   - copy the URL to the DATABASE_URL .env variable
+   - make sure to add `?ssl=true` to the end of this url
 
 ### Setup the application
 

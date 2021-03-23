@@ -1,4 +1,4 @@
-const { increment } = require("../db-config");
+// const { increment } = require('../db-config');
 
 exports.up = (knex) => {
   return knex.schema
@@ -23,15 +23,16 @@ exports.up = (knex) => {
       table.float('livability');
       table.float('latitude');
       table.float('longitude');
-      table.string('profile_id')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('profiles')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE');     
+      table
+        .string('profile_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('profiles')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE');
     })
-    .createTable('favorites',table => {
+    .createTable('favorites', (table) => {
       table.increments();
       table.string('city');
       table.string('state');
@@ -44,16 +45,18 @@ exports.up = (knex) => {
       table.float('livability');
       table.float('latitude');
       table.float('longitude');
-      table.string('profile_id')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('profiles')
-    })
-    
+      table
+        .string('profile_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('profiles');
+    });
 };
 
 exports.down = (knex) => {
   return knex.schema
-  .dropTableIfExists('cities').dropTableIfExists('profiles').dropTableIfExists('favorites');
+    .dropTableIfExists('cities')
+    .dropTableIfExists('favorites')
+    .dropTableIfExists('profiles');
 };
