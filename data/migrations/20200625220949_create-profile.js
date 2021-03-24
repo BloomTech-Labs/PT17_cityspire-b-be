@@ -59,5 +59,4 @@ exports.down = (knex) => {
     .dropTableIfExists('cities')
     .dropTableIfExists('favorites')
     .dropTableIfExists('profiles');
-  return knex.schema.dropTableIfExists('cities').dropTableIfExists('profiles');
 };

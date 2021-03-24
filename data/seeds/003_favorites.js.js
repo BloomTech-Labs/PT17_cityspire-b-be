@@ -1,9 +1,10 @@
 exports.seed = function (knex) {
   // Deletes ALL existing entries
-  return knex('cities')
+  return knex('favorites')
     .del()
     .then(function () {
-      return knex('cities').insert([
+      // Inserts seed entries
+      return knex('favorites').insert([
         {
           city: 'wichita',
           state: 'Kansas',
