@@ -1,9 +1,10 @@
 exports.seed = function (knex) {
   // Deletes ALL existing entries
-  return knex('cities')
+  return knex('favorites')
     .del()
     .then(function () {
-      return knex('cities').insert([
+      // Inserts seed entries
+      return knex('favorites').insert([
         {
           city: 'wichita',
           state: 'Kansas',
@@ -13,8 +14,6 @@ exports.seed = function (knex) {
           diversity_index: '58',
           walkability: '2.0',
           livability: '85',
-          latitude: '37.6872',
-          longitude: '97.3301',
           profile_id: '00ulthapbErVUwVJy4x6',
         },
         {
@@ -26,8 +25,6 @@ exports.seed = function (knex) {
           diversity_index: '58',
           walkability: '2.0',
           livability: '85',
-          latitude: '33.7490',
-          longitude: '84.3880',
           profile_id: '00ulthapbErVUwVJy4x6',
         },
       ]);
