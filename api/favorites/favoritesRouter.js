@@ -1,8 +1,6 @@
 const router = require('express').Router();
 
 const Favorites = require('./favoritesModel');
-// const City = require('../city/cityModel')
-// const Profile = require('../profile/profileModel')
 
 // #################################
 // Get a list of the saved favorites
@@ -56,7 +54,7 @@ router.delete('/:id/favorites/:id', (req, res) => {
     .catch((err) => {
       res
         .status(500)
-        .json({ message: 'Failed to delet city', error: err.message });
+        .json({ message: 'Failed to delete city', error: err.message });
     });
 });
 
