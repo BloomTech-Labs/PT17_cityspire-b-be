@@ -108,6 +108,10 @@ router.post('/', async (req, res) => {
   }
 });
 
+// #################################
+// Update Profile
+// #################################
+
 router.put('/', function (req, res) {
   const profile = req.body;
   if (profile) {
@@ -156,6 +160,10 @@ router.delete('/:id', function (req, res) {
   }
 });
 
+// #################################
+// Profile ID adding new city
+// #################################
+
 router.post('/:id/city', async (req, res) => {
   const city = req.body;
   city.profile_id = req.params.id;
@@ -168,6 +176,10 @@ router.post('/:id/city', async (req, res) => {
     res.status(500).json({ message: e.message });
   }
 });
+
+// #################################
+// Delete profile id city id
+// #################################
 
 router.delete('/:id/city/:city_id', async (req, res, next) => {
   const { city_id } = req.params;
