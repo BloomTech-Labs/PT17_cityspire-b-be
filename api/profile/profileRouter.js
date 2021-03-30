@@ -2,7 +2,12 @@ const express = require('express');
 // const authRequired = require('../middleware/authRequired');
 const Profiles = require('./profileModel');
 const Cities = require('../city/cityModel');
+const Favorites = require('../favorites/favoritesModel');
 const router = express.Router();
+
+// #################################
+// Get a list of the Profiles
+// #################################
 
 router.get('/', function (req, res) {
   Profiles.findAll()
@@ -14,6 +19,10 @@ router.get('/', function (req, res) {
       res.status(500).json({ message: err.message });
     });
 });
+
+// #################################
+// Get a single Profile ID
+// #################################
 
 router.get('/:id', function (req, res) {
   const id = String(req.params.id);
@@ -29,6 +38,28 @@ router.get('/:id', function (req, res) {
       res.status(500).json({ error: err.message });
     });
 });
+
+// #################################
+// Get a list of Saved Favorites from ID
+// #################################
+
+router.get('/:id/favorites/', (req, res) => {
+  const { id } = req.params;
+  Favorites.find(id)
+    .then((favList) => {
+      res.status(200).json({
+        message: 'Succes in retrieving your favorite cities',
+        favList,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+});
+
+// #################################
+// Get a single Profile ID
+// #################################
 
 router.get('/:id/city', (req, res) => {
   const { id } = req.params;
@@ -46,6 +77,10 @@ router.get('/:id/city', (req, res) => {
       res.status(500).json({ message: 'failed to get city', err });
     });
 });
+
+// #################################
+// Post a New Profile
+// #################################
 
 router.post('/', async (req, res) => {
   const profile = req.body;
@@ -72,6 +107,10 @@ router.post('/', async (req, res) => {
     res.status(404).json({ message: 'Profile missing' });
   }
 });
+
+// #################################
+// Update Profile
+// #################################
 
 router.put('/', function (req, res) {
   const profile = req.body;
@@ -101,6 +140,10 @@ router.put('/', function (req, res) {
   }
 });
 
+// #################################
+// Delete a single Profile ID
+// #################################
+
 router.delete('/:id', function (req, res) {
   const id = req.params.id;
   try {
@@ -117,6 +160,10 @@ router.delete('/:id', function (req, res) {
   }
 });
 
+// #################################
+// Profile ID adding new city
+// #################################
+
 router.post('/:id/city', async (req, res) => {
   const city = req.body;
   city.profile_id = req.params.id;
@@ -129,6 +176,10 @@ router.post('/:id/city', async (req, res) => {
     res.status(500).json({ message: e.message });
   }
 });
+
+// #################################
+// Delete profile id city id
+// #################################
 
 router.delete('/:id/city/:city_id', async (req, res, next) => {
   const { city_id } = req.params;
