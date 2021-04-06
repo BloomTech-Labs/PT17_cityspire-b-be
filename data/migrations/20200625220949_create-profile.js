@@ -11,7 +11,7 @@ exports.up = (knex) => {
       table.timestamps(true, true);
     })
     .createTable('cities', function (table) {
-      table.increments();
+      table.increments('id');
       table.string('city');
       table.string('state');
       table.float('diversity_index');
@@ -23,20 +23,18 @@ exports.up = (knex) => {
       table.float('livability');
       table.float('latitude');
       table.float('longitude');
-      table
-        .string('profile_id')
-        .unsigned()
-        .notNullable()
-        .references('id')
-        .inTable('profiles')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+      //   table
+      //     .string('profile_id')
+      //     .unsigned()
+      //     .notNullable()
+      //     .references('id')
+      //     .inTable('profiles')
+      //     .onUpdate('CASCADE')
+      //     .onDelete('CASCADE');
+      // });
     });
 };
 
 exports.down = (knex) => {
-  return knex.schema
-    .dropTableIfExists('favorites')
-    .dropTableIfExists('cities')
-    .dropTableIfExists('profiles');
+  return knex.schema.dropTableIfExists('cities').dropTableIfExists('profiles');
 };
