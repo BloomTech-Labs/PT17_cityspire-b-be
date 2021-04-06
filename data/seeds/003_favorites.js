@@ -6,26 +6,29 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex('favorites').insert([
         {
-          city: 'wichita',
-          state: 'Kansas',
-          rental_price: '850',
-          crime: 'medium',
-          air_quality_index: 'low',
-          diversity_index: '58',
-          walkability: '2.0',
-          livability: '85',
+          id: 0,
+          city_id: 0,
+          profile_id: 'q2frnebuhwpnvi8wyt1y',
+        },
+        {
+          id: 1,
+          city_id: 4,
+          profile_id: 'xreq614t6kunbppl09it',
+        },
+        {
+          id: 2,
+          city_id: 4,
           profile_id: '00ulthapbErVUwVJy4x6',
         },
         {
-          city: 'Atlanta',
-          state: 'Georgia',
-          rental_price: '850',
-          crime: 'medium',
-          air_quality_index: 'low',
-          diversity_index: '58',
-          walkability: '2.0',
-          livability: '85',
+          id: 3,
+          city_id: 3,
           profile_id: '00ulthapbErVUwVJy4x6',
+        },
+        {
+          id: 4,
+          city_id: 5,
+          profile_id: 'q2frnebuhwpnvi8wyt1y',
         },
       ]);
     });

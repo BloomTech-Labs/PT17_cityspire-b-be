@@ -4,14 +4,14 @@ const db = require('../../data/db-config');
 module.exports = {
   find,
   add,
-  findBy,
+  addCityToProfile,
+  findByProfileId,
+  getCityInfo,
   findById,
 };
 
 function find() {
-  return db('favorites')
-    .select('id', 'city', 'state', 'population', 'rental_price', 'crime')
-    .orderBy('id');
+  return db('favorites').select('*').orderBy('id');
 }
 
 async function add(city) {
@@ -23,13 +23,46 @@ async function add(city) {
   }
 }
 
-function findBy(filter) {
-  return db('favorites')
-    .where(filter)
-    .select('id', 'city', 'state', 'rental_price')
-    .first();
+async function addCityToProfile(profile_id, city_id) {
+  try {
+    return db('favorites').insert(profile_id, { city_id });
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function findByProfileId(userId) {
+  try {
+    return await db('favorites').where('profile_id', userId).select('*');
+    // .first();
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function getCityInfo(userId) {
+  try {
+    return await db('cities')
+      .join('favorites', 'cities.id', 'favorites.city_id')
+      .where('favorites.profile_id', userId)
+      .select('*');
+  } catch (err) {
+    throw err;
+  }
 }
 
 function findById(id) {
   return db('favorites').where({ id }).first();
 }
+
+// async function findById(userId) {
+//   try {
+//     const [favorite] = await db('favorites')
+//       .where('profile_id', userId)
+//       .select('profile_id');
+//     const cities = await findById(userId);
+//     return { ...favorite, cities };
+//   } catch (err) {
+//     throw err;
+//   }
+// }
