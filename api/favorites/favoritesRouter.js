@@ -3,19 +3,18 @@ const db = require('../../data/db-config');
 const Favorites = require('./favoritesModel');
 
 // #################################
-// Get a list of the saved favorites
+// Get a list of the Users favorites
 // #################################
 
-router.get('/', (req, res) => {
-  Favorites.find()
-    .then((fav) => {
-      res.status(200).json({ message: 'Success', fav });
-    })
-    .catch((err) => {
-      res
-        .status(404)
-        .json({ message: 'Error with request', error: err.message });
-    });
+router.get('/:id/', async (req, res) => {
+  const userId = req.params.id;
+  const favs = await db('favorites').where({ profile_id: userId });
+  let f = [];
+  for (let fav in favs) {
+    let x = await db('cities').where({ id: favs[fav].city_id });
+    f.push(x);
+  }
+  res.status(200).json({ f });
 });
 
 router.get('/:id/', async (req, res) => {
