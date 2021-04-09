@@ -8,10 +8,20 @@ module.exports = {
   findByProfileId,
   getCityInfo,
   findById,
+  searchByCity,
 };
 
 function find() {
   return db('favorites').select('*').orderBy('id');
+}
+
+async function searchByCity(x) {
+  const city = await db('cities').where({ city: x });
+  if (city.length == 0) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 async function add(city) {

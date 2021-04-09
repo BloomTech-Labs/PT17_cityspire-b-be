@@ -1,7 +1,6 @@
 exports.up = function (knex) {
   return knex.schema.createTable('favorites', function (table) {
     table.increments();
-    // table.primary(['profile_id', 'city_id']);
     table.string('profile_id').notNullable();
 
     table
