@@ -8,10 +8,20 @@ module.exports = {
   findByProfileId,
   getCityInfo,
   findById,
+  searchByCity,
 };
 
 function find() {
   return db('favorites').select('*').orderBy('id');
+}
+
+async function searchByCity(x) {
+  const city = await db('cities').where({ city: x });
+  if (city.length == 0) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 async function add(city) {
@@ -23,9 +33,10 @@ async function add(city) {
   }
 }
 
-async function addCityToProfile(profile_id, city_id) {
+async function addCityToProfile(fav) {
   try {
-    return db('favorites').insert(profile_id, { city_id });
+    const [profile_id] = await db('favorites').insert(fav);
+    return profile_id;
   } catch (err) {
     throw err;
   }
