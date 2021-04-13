@@ -32,16 +32,25 @@ router.get('/:id/', async (req, res) => {
 // Save city to favorites
 // #################################
 
-router.post('/:id/favorites', (req, res) => {
+router.post('/:id/favorites', async (req, res) => {
   const newFav = req.body;
-  Favorites.add(newFav)
-    .then((postFav) => {
-      res.status(201).json({ message: 'Successfully, Saved a city!', postFav });
+  console.log('city');
+  const cities = await db('cities');
+  console.log(cities);
+  if (!cities.includes(newFav)) {
+    db('cities').insert(newFav);
+  }
+  const fav = {};
+  fav.profile_id = req.params.id;
+  fav.city_id = newFav.id;
+  console.log('fav object', fav);
+  return db('favorites')
+    .insert(fav)
+    .then((fav) => {
+      res.status(201).json({ message: 'favorite added.', fav });
     })
     .catch((err) => {
-      res
-        .status(404)
-        .json({ message: 'Failed to save city', error: err.message });
+      console.log(err);
     });
 });
 
