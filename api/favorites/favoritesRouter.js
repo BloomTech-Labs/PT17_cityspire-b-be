@@ -18,17 +18,6 @@ router.get('/:id/', async (req, res) => {
   res.status(200).json({ favCities });
 });
 
-router.get('/:id/', async (req, res) => {
-  const userId = req.params.id;
-  const favs = await db('favorites').where({ profile_id: userId });
-  let f = [];
-  for (let fav in favs) {
-    let x = await db('cities').where({ id: favs[fav].city_id });
-    f.push(x);
-  }
-  res.status(200).json({ f });
-});
-
 // #################################
 // Save city to favorites
 // #################################
@@ -36,19 +25,20 @@ router.get('/:id/', async (req, res) => {
 router.post('/:id/favorites', async (req, res) => {
   const city_data = req.body;
   const { city } = req.body;
-  const { id } = req.params;
-  console.log(city_data);
+  const userId = req.params.id;
+  console.log('This is userID =====>', userId);
+  console.log('data from FE ===>', city_data);
   Favorites.searchByCity(city)
     .then((city) => {
-      console.log(city);
+      console.log('CITY DATA BEING SAVED ===> ', city.id);
       if (!city) {
         cities
           .add(city_data)
           .then((c) => {
-            console.log(c);
-            Favorites.addCityToProfile({ profile_id: id, city_id: c })
+            console.log('City data being added ====>', c.id);
+            Favorites.addCityToProfile({ profile_id: userId, city_id: c.id })
               .then((f) => {
-                console.log(f);
+                console.log('Fav city saved into favorites ====>', f);
                 res.status(200).json({
                   message:
                     'Congratulations on Saving a city to your favorites!',
@@ -56,22 +46,39 @@ router.post('/:id/favorites', async (req, res) => {
                 });
               })
               .catch((err) => {
-                console.log(err);
+                console.log('First error ===>', err);
                 res.status(500).json({
                   message: 'something went wrong trying to add favorite!',
                 });
               });
           })
           .catch((err) => {
-            console.log(err);
+            console.log('Second error ===>', err);
             res.status(500).json({
               message: 'something went wrong trying to add city to cities!',
+            });
+          });
+      } else {
+        console.log('CITY INFO ===> ', city.id);
+        const { id } = city;
+        Favorites.addCityToProfile({ profile_id: userId, city_id: id })
+          .then((f) => {
+            console.log('Fav city saved into favorites ====>', f);
+            res.status(200).json({
+              message: 'Congratulations on Saving a city to your favorites!',
+              f,
+            });
+          })
+          .catch((err) => {
+            console.log('Favorites error ===>', err);
+            res.status(500).json({
+              message: 'something went wrong trying to add favorite!',
             });
           });
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.log('Last error ===>', err);
       res
         .status(500)
         .json({ message: 'something went wrong trying to add favorite!' });
