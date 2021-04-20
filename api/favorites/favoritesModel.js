@@ -16,7 +16,6 @@ function find() {
 
 async function searchByCity(x) {
   const city = await db('cities').where({ city: x });
-  console.log('MODELS CITY ====> ', city);
   if (city.length == 0) {
     return false;
   } else {
@@ -37,7 +36,6 @@ async function add(city) {
 async function addCityToProfile(fav) {
   try {
     const profile_id = await db('favorites').insert(fav);
-    // console.log('MODELS PROFILE ===> ', profile_id);
     return findByProfileId(profile_id);
   } catch (err) {
     throw err;
@@ -45,7 +43,6 @@ async function addCityToProfile(fav) {
 }
 
 async function findByProfileId(userId) {
-  console.log('MODELS USERID ===>', userId);
   try {
     return await db('favorites').where({ profile_id: userId }).select('*');
   } catch (err) {

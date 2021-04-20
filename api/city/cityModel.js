@@ -18,7 +18,6 @@ async function add(city) {
 }
 
 const update = (id, city) => {
-  console.log(city);
   return db('cities').where({ id: id }).first().update(city).returning('*');
 };
 

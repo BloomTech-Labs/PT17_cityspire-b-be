@@ -9,7 +9,6 @@ router.get('/', function (req, res) {
       res.status(200).json(cities);
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).json({ message: err.message });
     });
 });
