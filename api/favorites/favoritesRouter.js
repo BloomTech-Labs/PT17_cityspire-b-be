@@ -23,9 +23,17 @@ router.get('/:id/', async (req, res) => {
 // #################################
 
 router.post('/:id/favorites', async (req, res) => {
+  console.log('hello');
   const city_data = req.body;
   const { city } = req.body;
   const userId = req.params.id;
+  const pfavs = await db('favorites').where({ profile_id: userId });
+  for (let i in pfavs) {
+    const c = await db('cities').where({ id: pfavs[i].city_id });
+    if (city == c[0].city) {
+      res.status(500).json({ message: 'already in favs!' });
+    }
+  }
   Favorites.searchByCity(city)
     .then((city) => {
       if (!city) {
@@ -99,3 +107,11 @@ router.delete('/:profileid/favorites/:cityid', (req, res) => {
 });
 
 module.exports = router;
+
+// const pfavs = await db('favorites').where({profile_id: userId})
+//   for(let i in pfavs){
+//     const c = await db('cities').where({id:i.city_id})
+//     if(req.body.city == c[0].city){
+//       res.status(500).json({message:'already in favs!'})
+//     }
+//   }
