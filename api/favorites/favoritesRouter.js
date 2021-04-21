@@ -1,17 +1,7 @@
 const router = require('express').Router();
-
-const Favorites = require('./favoritesModel');
-
 const db = require('../../data/db-config');
-
-async function searchByCity(x) {
-  const city = await db('cities').where({ city: x });
-  if (city.length == 0) {
-    return false;
-  } else {
-    return true;
-  }
-}
+const Favorites = require('./favoritesModel');
+const cities = require('../city/cityModel');
 
 // #################################
 // Get a list of the Users favorites
@@ -33,45 +23,86 @@ router.get('/:id/', async (req, res) => {
 // #################################
 
 router.post('/:id/favorites', async (req, res) => {
-  const cities = await db('cities');
-  const newFav = req.body;
-  const newFavName = req.body.city;
-
-  if (!searchByCity(newFavName)) {
-    db('cities').insert(newFav);
+  console.log('hello');
+  const city_data = req.body;
+  const { city } = req.body;
+  const userId = req.params.id;
+  const pfavs = await db('favorites').where({ profile_id: userId });
+  for (let i in pfavs) {
+    const c = await db('cities').where({ id: pfavs[i].city_id });
+    if (city == c[0].city) {
+      res.status(500).json({ message: 'already in favs!' });
+    }
   }
-
-  console.log('CITIES ====> ', cities);
-
-  const fav = {};
-  fav.profile_id = req.params.id;
-  fav.city_id = newFav.id;
-  res.status(200).json({
-    message: 'Congratulations on Saving a city to your favorites!',
-    fav,
-  });
+  Favorites.searchByCity(city)
+    .then((city) => {
+      if (!city) {
+        cities
+          .add(city_data)
+          .then((c) => {
+            Favorites.addCityToProfile({ profile_id: userId, city_id: c.id })
+              .then((f) => {
+                res.status(200).json({
+                  message:
+                    'Congratulations on Saving a city to your favorites!',
+                  f,
+                });
+              })
+              .catch((err) => {
+                res.status(500).json({
+                  message: 'something went wrong trying to add favorite!',
+                  err,
+                });
+              });
+          })
+          .catch((err) => {
+            res.status(500).json({
+              message: 'something went wrong trying to add city to cities!',
+              err,
+            });
+          });
+      } else {
+        const { id } = city;
+        Favorites.addCityToProfile({ profile_id: userId, city_id: id })
+          .then((f) => {
+            res.status(200).json({
+              message: 'Congratulations on Saving a city to your favorites!',
+              f,
+            });
+          })
+          .catch((err) => {
+            res.status(500).json({
+              message: 'something went wrong trying to add favorite!',
+              err,
+            });
+          });
+      }
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .json({ message: 'something went wrong trying to add favorite!', err });
+    });
 });
 
 // #################################
 // Delete city from favorites
 // #################################
 
-router.delete('/:id/favorites/:id', (req, res) => {
-  const { id } = req.params;
-  Favorites.remove(id)
-    .then((deleted) => {
-      if (deleted) {
-        res.status(200).json({
-          message: 'Success in deleting the city from your favorties! :-)',
-        });
-      } else {
-        res.status(404).json({ message: 'Could not find city with given ID' });
-      }
+router.delete('/:profileid/favorites/:cityid', (req, res) => {
+  const pid = req.params.profileid;
+  const cid = req.params.cityid;
+  return db('favorites')
+    .where({ profile_id: pid, city_id: cid })
+    .del()
+    .then((resp) => {
+      res.status(200).json({ message: 'favorite deleted.', resp });
     })
     .catch((err) => {
-      res
-        .status(500)
-        .json({ message: 'Failed to delete city', error: err.message });
+      res.status(500).json({
+        message: 'something went wrong trying to delete from favs!',
+        err,
+      });
     });
 });
 

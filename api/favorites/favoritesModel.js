@@ -6,7 +6,6 @@ module.exports = {
   add,
   addCityToProfile,
   findByProfileId,
-  getCityInfo,
   findById,
   searchByCity,
 };
@@ -20,7 +19,8 @@ async function searchByCity(x) {
   if (city.length == 0) {
     return false;
   } else {
-    return true;
+    const cityData = await db('cities').where({ city: x }).first();
+    return cityData;
   }
 }
 
@@ -33,9 +33,10 @@ async function add(city) {
   }
 }
 
-async function addCityToProfile(profile_id, city_id) {
+async function addCityToProfile(fav) {
   try {
-    return db('favorites').insert(profile_id, { city_id });
+    const profile_id = await db('favorites').insert(fav);
+    return findByProfileId(profile_id);
   } catch (err) {
     throw err;
   }
@@ -43,19 +44,7 @@ async function addCityToProfile(profile_id, city_id) {
 
 async function findByProfileId(userId) {
   try {
-    return await db('favorites').where('profile_id', userId).select('*');
-    // .first();
-  } catch (err) {
-    throw err;
-  }
-}
-
-async function getCityInfo(userId) {
-  try {
-    return await db('cities')
-      .join('favorites', 'cities.id', 'favorites.city_id')
-      .where('favorites.profile_id', userId)
-      .select('*');
+    return await db('favorites').where({ profile_id: userId }).select('*');
   } catch (err) {
     throw err;
   }
@@ -64,15 +53,3 @@ async function getCityInfo(userId) {
 function findById(id) {
   return db('favorites').where({ id }).first();
 }
-
-// async function findById(userId) {
-//   try {
-//     const [favorite] = await db('favorites')
-//       .where('profile_id', userId)
-//       .select('profile_id');
-//     const cities = await findById(userId);
-//     return { ...favorite, cities };
-//   } catch (err) {
-//     throw err;
-//   }
-// }
