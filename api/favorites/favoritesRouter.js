@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const db = require('../../data/db-config');
 const Favorites = require('./favoritesModel');
-const cities = require('../city/cityModel');
+const Cities = require('../city/cityModel');
 
 // #################################
 // Get a list of the Users favorites
@@ -23,22 +23,20 @@ router.get('/:id/', async (req, res) => {
 // #################################
 
 router.post('/:id/favorites', async (req, res) => {
-  console.log('hello');
   const city_data = req.body;
   const { city } = req.body;
   const userId = req.params.id;
   const pfavs = await db('favorites').where({ profile_id: userId });
-  for (let i in pfavs) {
-    const c = await db('cities').where({ id: pfavs[i].city_id });
+  for (let fav of pfavs) {
+    const c = await db('cities').where({ id: fav.city_id });
     if (city == c[0].city) {
       res.status(500).json({ message: 'already in favs!' });
     }
   }
   Favorites.searchByCity(city)
-    .then((city) => {
-      if (!city) {
-        cities
-          .add(city_data)
+    .then((cityR) => {
+      if (!cityR) {
+        Cities.add(city_data)
           .then((c) => {
             Favorites.addCityToProfile({ profile_id: userId, city_id: c.id })
               .then((f) => {
@@ -57,7 +55,7 @@ router.post('/:id/favorites', async (req, res) => {
           })
           .catch((err) => {
             res.status(500).json({
-              message: 'something went wrong trying to add city to cities!',
+              message: 'something went wrong trying to add city to Cities!',
               err,
             });
           });
