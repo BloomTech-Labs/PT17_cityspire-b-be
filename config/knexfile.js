@@ -28,7 +28,7 @@ module.exports = {
     },
     migrations: { directory: '../data/migrations' },
     seeds: {
-      directory: 'you-are-not-able-to-run-seeds-in-production'
+      directory: 'you-are-not-able-to-run-seeds-in-production',
     },
   },
 };
