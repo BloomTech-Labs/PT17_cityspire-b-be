@@ -27,6 +27,8 @@ module.exports = {
       ssl: true,
     },
     migrations: { directory: '../data/migrations' },
-    seeds: { directory: '../data/seeds' },
+    seeds: {
+      directory: 'you-are-not-able-to-run-seeds-in-production'
+    },
   },
 };
