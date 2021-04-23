@@ -24,16 +24,16 @@ router.get('/:id/', async (req, res) => {
 
 router.post('/:id/favorites', async (req, res) => {
   const city_data = req.body;
-  const { city } = req.body;
+  const { city, state } = req.body;
   const userId = req.params.id;
   const pfavs = await db('favorites').where({ profile_id: userId });
   for (let fav of pfavs) {
     const c = await db('cities').where({ id: fav.city_id });
-    if (city == c[0].city) {
+    if (city == c[0].city && state == c[0].state) {
       res.status(500).json({ message: 'already in favs!' });
     }
   }
-  Favorites.searchByCity(city)
+  Favorites.searchByCity(city, state)
     .then((cityR) => {
       if (!cityR) {
         Cities.add(city_data)
