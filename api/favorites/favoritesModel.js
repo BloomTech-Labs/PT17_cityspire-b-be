@@ -14,12 +14,12 @@ function find() {
   return db('favorites').select('*').orderBy('id');
 }
 
-async function searchByCity(x) {
-  const city = await db('cities').where({ city: x });
+async function searchByCity(x, y) {
+  const city = await db('cities').where({ city: x, state: y });
   if (city.length == 0) {
     return false;
   } else {
-    const cityData = await db('cities').where({ city: x }).first();
+    const cityData = await db('cities').where({ city: x, state: y }).first();
     return cityData;
   }
 }
